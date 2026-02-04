@@ -14,15 +14,9 @@ const listController = (() => {
     task.addChecklistItem(title, description);
   };
 
-  // const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
-  //   const task = taskList.find((item) => item.id === taskId);
-  //   task.deleteChecklistItem(checklistItemId);
-  // };
-
-  const deleteChecklistItemFromTask = (id) => {
-    taskList.forEach((task) => {
-      task.deleteChecklistItem(id);
-    });
+  const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
+    const task = taskList.find((item) => item.id === taskId);
+    task.deleteChecklistItem(checklistItemId);
   };
 
   const showList = () => {
