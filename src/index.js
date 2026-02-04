@@ -13,6 +13,11 @@ const listController = (() => {
     task.priority = priority;
   };
 
+  const toggleTaskDone = (id) => {
+    const task = taskList.find((item) => item.id === id);
+    task.toggleDone();
+  };
+
   const deleteTask = (id) => {
     taskList = taskList.filter((task) => task.id !== id);
   };
@@ -32,6 +37,11 @@ const listController = (() => {
     task.editChecklistItem(checklistItemId, title, description);
   };
 
+  const toggleChecklistItemDone = (taskId, checklistItemId) => {
+    const task = taskList.find((item) => item.id === taskId);
+    task.toggleChecklistItemDone(checklistItemId);
+  };
+
   const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
     const task = taskList.find((item) => item.id === taskId);
     task.deleteChecklistItem(checklistItemId);
@@ -44,9 +54,11 @@ const listController = (() => {
   return {
     addTask,
     editTask,
+    toggleTaskDone,
     deleteTask,
     addChecklistItemToTask,
     editChecklistItemFromTask,
+    toggleChecklistItemDone,
     deleteChecklistItemFromTask,
     getList,
   };
@@ -75,6 +87,10 @@ class ChecklistItem {
     this.description = description;
     this.isDone = false;
   }
+
+  toggleDone = () => {
+    this.isDone = !this.isDone;
+  };
 }
 
 class Task {
@@ -107,6 +123,11 @@ class Task {
     item.description = description;
   };
 
+  toggleChecklistItemDone = (id) => {
+    const item = this.checklist.find((item) => item.id === id);
+    item.toggleDone();
+  };
+
   deleteChecklistItem = (id) => {
     if (this.hasChecklistItem(id)) {
       this.checklist = this.checklist.filter((item) => item.id !== id);
@@ -122,6 +143,10 @@ class Task {
     } else {
       return false;
     }
+  };
+
+  toggleDone = () => {
+    this.isDone = !this.isDone;
   };
 }
 
