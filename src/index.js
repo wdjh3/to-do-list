@@ -22,6 +22,16 @@ const listController = (() => {
     task.addChecklistItem(title, description);
   };
 
+  const editChecklistItemFromTask = (
+    taskId,
+    checklistItemId,
+    title,
+    description,
+  ) => {
+    const task = taskList.find((item) => item.id === taskId);
+    task.editChecklistItem(checklistItemId, title, description);
+  };
+
   const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
     const task = taskList.find((item) => item.id === taskId);
     task.deleteChecklistItem(checklistItemId);
@@ -36,6 +46,7 @@ const listController = (() => {
     editTask,
     deleteTask,
     addChecklistItemToTask,
+    editChecklistItemFromTask,
     deleteChecklistItemFromTask,
     getList,
   };
@@ -88,6 +99,12 @@ class Task {
 
   addChecklistItem = (title, description) => {
     this.checklist.push(new ChecklistItem(title, description));
+  };
+
+  editChecklistItem = (id, title, description) => {
+    const item = this.checklist.find((item) => item.id === id);
+    item.title = title;
+    item.description = description;
   };
 
   deleteChecklistItem = (id) => {
