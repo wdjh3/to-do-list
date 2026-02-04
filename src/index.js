@@ -5,6 +5,14 @@ const listController = (() => {
     taskList.push(new Task(title, description, dueDate, priority));
   };
 
+  const editTask = (id, title, description, dueDate, priority) => {
+    const task = taskList.find((item) => item.id === id);
+    task.title = title;
+    task.description = description;
+    task.dueDate = dueDate;
+    task.priority = priority;
+  };
+
   const deleteTask = (id) => {
     taskList = taskList.filter((task) => task.id !== id);
   };
@@ -25,10 +33,11 @@ const listController = (() => {
 
   return {
     addTask,
-    getList,
+    editTask,
     deleteTask,
     addChecklistItemToTask,
     deleteChecklistItemFromTask,
+    getList,
   };
 })();
 
