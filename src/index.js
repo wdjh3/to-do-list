@@ -19,13 +19,13 @@ const listController = (() => {
     task.deleteChecklistItem(checklistItemId);
   };
 
-  const showList = () => {
+  const getList = () => {
     return [...taskList]; // Task properties and methods and checklist can still be manipulated
   };
 
   return {
     addTask,
-    showList,
+    getList,
     deleteTask,
     addChecklistItemToTask,
     deleteChecklistItemFromTask,
@@ -100,4 +100,3 @@ class Task {
 }
 
 window.listController = listController;
-
