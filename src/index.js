@@ -83,7 +83,7 @@ class Task {
 
   deleteChecklistItem = (id) => {
     if (this.hasChecklistItem(id)) {
-      this.checklist = this.checklist.filter((task) => task.id !== id);
+      this.checklist = this.checklist.filter((item) => item.id !== id);
       return true;
     } else {
       return false;
