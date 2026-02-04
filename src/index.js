@@ -32,8 +32,15 @@ const listController = (() => {
   };
 })();
 
-// TODO: Priority enum
-const Priority = {};
+/**
+ * @enum {string}
+ */
+const PRIORITY = Object.freeze({
+  URGENT_AND_IMPORTANT: "u&i",
+  URGENT: "u",
+  IMPORTANT: "i",
+  NONE: "n",
+});
 
 class ChecklistItem {
   /**
@@ -56,7 +63,7 @@ class Task {
    *  @param {string} title
    *  @param {string} description
    *  @param {Date} dueDate
-   *  @param {string} priority
+   *  @param {keyof PRIORITY} priority
    *  @param {ChecklistItem[]} checklist
    *  @param {boolean} isDone
    */
