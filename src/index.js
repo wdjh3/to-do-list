@@ -20,7 +20,7 @@ const listController = (() => {
   };
 
   const showList = () => {
-    console.log([...taskList]);
+    return [...taskList]; // Task properties and methods and checklist can still be manipulated
   };
 
   return {
