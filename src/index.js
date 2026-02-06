@@ -1,74 +1,67 @@
 const projectController = (() => {
   let projectList = [];
 
-  return { projectList };
-})();
-
-const listController = (() => {
-  let taskList = [];
-
-  const addTask = (title, description, dueDate, priority) => {
-    taskList.push(new Task(title, description, dueDate, priority));
+  const addProject = (name) => {
+    projectList.push(new Project(name));
   };
 
-  const editTask = (id, title, description, dueDate, priority) => {
-    const task = taskList.find((item) => item.id === id);
+  return { projectList, addProject };
+})();
+
+class Project {
+  constructor(name) {
+    this.id = crypto.randomUUID();
+    this.name = name;
+    this.taskList = [];
+  }
+
+  // TODO: Add fromJSON method
+
+  addTask = (title, description, dueDate, priority) => {
+    this.taskList.push(new Task(title, description, dueDate, priority));
+  };
+
+  editTask = (id, title, description, dueDate, priority) => {
+    const task = this.taskList.find((item) => item.id === id);
     task.title = title;
     task.description = description;
     task.dueDate = dueDate;
     task.priority = priority;
   };
 
-  const toggleTaskDone = (id) => {
-    const task = taskList.find((item) => item.id === id);
+  toggleTaskDone = (id) => {
+    const task = this.taskList.find((item) => item.id === id);
     task.toggleDone();
   };
 
-  const deleteTask = (id) => {
-    taskList = taskList.filter((task) => task.id !== id);
+  deleteTask = (id) => {
+    this.taskList = this.taskList.filter((task) => task.id !== id);
   };
 
-  const addChecklistItemToTask = (id, title, description) => {
-    const task = taskList.find((item) => item.id === id);
+  addChecklistItemToTask = (id, title, description) => {
+    const task = this.taskList.find((item) => item.id === id);
     task.addChecklistItem(title, description);
   };
 
-  const editChecklistItemFromTask = (
-    taskId,
-    checklistItemId,
-    title,
-    description,
-  ) => {
-    const task = taskList.find((item) => item.id === taskId);
+  editChecklistItemFromTask = (taskId, checklistItemId, title, description) => {
+    const task = this.taskList.find((item) => item.id === taskId);
     task.editChecklistItem(checklistItemId, title, description);
   };
 
-  const toggleChecklistItemDone = (taskId, checklistItemId) => {
-    const task = taskList.find((item) => item.id === taskId);
+  toggleChecklistItemDone = (taskId, checklistItemId) => {
+    const task = this.taskList.find((item) => item.id === taskId);
     task.toggleChecklistItemDone(checklistItemId);
   };
 
-  const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
-    const task = taskList.find((item) => item.id === taskId);
+  deleteChecklistItemFromTask = (taskId, checklistItemId) => {
+    const task = this.taskList.find((item) => item.id === taskId);
     task.deleteChecklistItem(checklistItemId);
   };
 
-  const getList = () => {
-    return [...taskList]; // Task properties and methods and checklist can still be manipulated
+  getList = () => {
+    return [...this.taskList]; // Task properties and methods and checklist can still be manipulated
   };
-
-  return {
-    addTask,
-    editTask,
-    toggleTaskDone,
-    deleteTask,
-    addChecklistItemToTask,
-    editChecklistItemFromTask,
-    toggleChecklistItemDone,
-    deleteChecklistItemFromTask,
-    getList,
-  };
-})();
+}
 
 /**
  * @enum {string}
@@ -100,6 +93,7 @@ class ChecklistItem {
 }
 
 class Task {
+  // TODO: move checklist to #checklist here
   /**
    *  @param {string} id
    *  @param {string} title
@@ -156,4 +150,4 @@ class Task {
   };
 }
 
-window.listController = listController;
+window.projectController = projectController;
