@@ -88,6 +88,15 @@ class ChecklistItem {
     this.isDone = false;
   }
 
+  static fromJSON(data) {
+    const item = new ChecklistItem(data.title, data.description);
+
+    item.id = data.id;
+    item.isDone = data.isDone;
+
+    return item;
+  }
+
   toggleDone = () => {
     this.isDone = !this.isDone;
   };
@@ -111,6 +120,24 @@ class Task {
     this.priority = priority;
     this.checklist = [];
     this.isDone = false;
+  }
+
+  static fromJSON(data) {
+    const checklist = data.checklist.map((item) =>
+      ChecklistItem.fromJSON(item),
+    );
+    const task = new Task(
+      data.title,
+      data.description,
+      data.dueDate, // TODO: Remember to wrap with new Date() to create valid Date object for use
+      data.priority,
+    );
+
+    task.id = data.id;
+    task.checklist = checklist;
+    task.isDone = data.isDone;
+
+    return task;
   }
 
   addChecklistItem = (title, description) => {
