@@ -1,68 +1,54 @@
-const listController = (() => {
-  let taskList = [];
+const projectController = (() => {
+  let projectList = [];
 
-  const addTask = (title, description, dueDate, priority) => {
-    taskList.push(new Task(title, description, dueDate, priority));
+  const addProject = (name) => {
+    projectList.push(new Project(name));
   };
 
-  const editTask = (id, title, description, dueDate, priority) => {
-    const task = taskList.find((item) => item.id === id);
-    task.title = title;
-    task.description = description;
-    task.dueDate = dueDate;
-    task.priority = priority;
+  const getProjects = () => {
+    return JSON.parse(JSON.stringify(projectList));
   };
 
-  const toggleTaskDone = (id) => {
-    const task = taskList.find((item) => item.id === id);
-    task.toggleDone();
+  const getProject = (id) => {
+    return projectList.find((project) => project.id === id);
   };
 
-  const deleteTask = (id) => {
-    taskList = taskList.filter((task) => task.id !== id);
-  };
-
-  const addChecklistItemToTask = (id, title, description) => {
-    const task = taskList.find((item) => item.id === id);
-    task.addChecklistItem(title, description);
-  };
-
-  const editChecklistItemFromTask = (
-    taskId,
-    checklistItemId,
-    title,
-    description,
-  ) => {
-    const task = taskList.find((item) => item.id === taskId);
-    task.editChecklistItem(checklistItemId, title, description);
-  };
-
-  const toggleChecklistItemDone = (taskId, checklistItemId) => {
-    const task = taskList.find((item) => item.id === taskId);
-    task.toggleChecklistItemDone(checklistItemId);
-  };
-
-  const deleteChecklistItemFromTask = (taskId, checklistItemId) => {
-    const task = taskList.find((item) => item.id === taskId);
-    task.deleteChecklistItem(checklistItemId);
-  };
-
-  const getList = () => {
-    return [...taskList]; // Task properties and methods and checklist can still be manipulated
-  };
-
-  return {
-    addTask,
-    editTask,
-    toggleTaskDone,
-    deleteTask,
-    addChecklistItemToTask,
-    editChecklistItemFromTask,
-    toggleChecklistItemDone,
-    deleteChecklistItemFromTask,
-    getList,
-  };
+  return { addProject, getProjects, getProject };
 })();
+
+class Project {
+  constructor(name) {
+    this.id = crypto.randomUUID();
+    this.name = name;
+    this.taskList = [];
+  }
+
+  // TODO: Add fromJSON method
+
+  edit = (name) => {
+    this.name = name;
+  };
+
+  addTask = (title, description, dueDate, priority) => {
+    this.taskList.push(new Task(title, description, dueDate, priority));
+  };
+
+  deleteTask = (id) => {
+    this.taskList = this.taskList.filter((task) => task.id !== id);
+  };
+
+  getTasks = () => {
+    return JSON.parse(JSON.stringify(this.taskList));
+  };
+
+  getTask = (id) => {
+    return this.taskList.find((task) => task.id === id);
+  };
+
+  getList = () => {
+    return [...this.taskList]; // Task properties and methods and checklist can still be manipulated
+  };
+}
 
 /**
  * @enum {string}
@@ -74,35 +60,8 @@ const PRIORITY = Object.freeze({
   NONE: "n",
 });
 
-class ChecklistItem {
-  /**
-   * @param {string} id
-   * @param {string} title
-   * @param {string} description
-   * @param {boolean} isDone
-   */
-  constructor(title, description) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.description = description;
-    this.isDone = false;
-  }
-
-  static fromJSON(data) {
-    const item = new ChecklistItem(data.title, data.description);
-
-    item.id = data.id;
-    item.isDone = data.isDone;
-
-    return item;
-  }
-
-  toggleDone = () => {
-    this.isDone = !this.isDone;
-  };
-}
-
 class Task {
+  // TODO: move checklist to #checklist here
   /**
    *  @param {string} id
    *  @param {string} title
@@ -140,23 +99,19 @@ class Task {
     return task;
   }
 
+  edit = (title, description, dueDate, priority) => {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+  };
+
   addChecklistItem = (title, description) => {
     this.checklist.push(new ChecklistItem(title, description));
   };
 
-  editChecklistItem = (id, title, description) => {
-    const item = this.checklist.find((item) => item.id === id);
-    item.title = title;
-    item.description = description;
-  };
-
-  toggleChecklistItemDone = (id) => {
-    const item = this.checklist.find((item) => item.id === id);
-    item.toggleDone();
-  };
-
   deleteChecklistItem = (id) => {
-    if (this.hasChecklistItem(id)) {
+    if (this.getChecklistItem(id)) {
       this.checklist = this.checklist.filter((item) => item.id !== id);
       return true;
     } else {
@@ -164,12 +119,12 @@ class Task {
     }
   };
 
-  hasChecklistItem = (id) => {
-    if (this.checklist.find((item) => item.id === id)) {
-      return true;
-    } else {
-      return false;
-    }
+  getChecklistItems = () => {
+    return JSON.parse(JSON.stringify(this.checklist));
+  };
+
+  getChecklistItem = (id) => {
+    return this.checklist.find((item) => item.id === id);
   };
 
   toggleDone = () => {
@@ -177,4 +132,37 @@ class Task {
   };
 }
 
-window.listController = listController;
+class ChecklistItem {
+  /**
+   * @param {string} id
+   * @param {string} title
+   * @param {string} description
+   * @param {boolean} isDone
+   */
+  constructor(title, description) {
+    this.id = crypto.randomUUID();
+    this.title = title;
+    this.description = description;
+    this.isDone = false;
+  }
+
+  edit = (title, description) => {
+    this.title = title;
+    this.description = description;
+  };
+
+  static fromJSON(data) {
+    const item = new ChecklistItem(data.title, data.description);
+
+    item.id = data.id;
+    item.isDone = data.isDone;
+
+    return item;
+  }
+
+  toggleDone = () => {
+    this.isDone = !this.isDone;
+  };
+}
+
+window.projectController = projectController;
