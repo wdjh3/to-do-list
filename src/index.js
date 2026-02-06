@@ -5,11 +5,15 @@ const projectController = (() => {
     projectList.push(new Project(name));
   };
 
+  const getProjects = () => {
+    return JSON.parse(JSON.stringify(projectList));
+  };
+
   const getProject = (id) => {
     return projectList.find((project) => project.id === id);
   };
 
-  return { projectList, addProject, getProject };
+  return { addProject, getProjects, getProject };
 })();
 
 class Project {
@@ -33,6 +37,10 @@ class Project {
     this.taskList = this.taskList.filter((task) => task.id !== id);
   };
 
+  getTasks = () => {
+    return JSON.parse(JSON.stringify(this.taskList));
+  };
+
   getTask = (id) => {
     return this.taskList.find((task) => task.id === id);
   };
@@ -51,30 +59,6 @@ const PRIORITY = Object.freeze({
   IMPORTANT: "i",
   NONE: "n",
 });
-
-class ChecklistItem {
-  /**
-   * @param {string} id
-   * @param {string} title
-   * @param {string} description
-   * @param {boolean} isDone
-   */
-  constructor(title, description) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.description = description;
-    this.isDone = false;
-  }
-
-  edit = (title, description) => {
-    this.title = title;
-    this.description = description;
-  };
-
-  toggleDone = () => {
-    this.isDone = !this.isDone;
-  };
-}
 
 class Task {
   // TODO: move checklist to #checklist here
@@ -117,8 +101,36 @@ class Task {
     }
   };
 
+  getChecklistItems = () => {
+    return JSON.parse(JSON.stringify(this.checklist));
+  };
+
   getChecklistItem = (id) => {
     return this.checklist.find((item) => item.id === id);
+  };
+
+  toggleDone = () => {
+    this.isDone = !this.isDone;
+  };
+}
+
+class ChecklistItem {
+  /**
+   * @param {string} id
+   * @param {string} title
+   * @param {string} description
+   * @param {boolean} isDone
+   */
+  constructor(title, description) {
+    this.id = crypto.randomUUID();
+    this.title = title;
+    this.description = description;
+    this.isDone = false;
+  }
+
+  edit = (title, description) => {
+    this.title = title;
+    this.description = description;
   };
 
   toggleDone = () => {
