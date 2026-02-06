@@ -1,3 +1,9 @@
+const projectController = (() => {
+  let projectList = [];
+
+  return { projectList };
+})();
+
 const listController = (() => {
   let taskList = [];
 
