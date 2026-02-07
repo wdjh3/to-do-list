@@ -23,7 +23,15 @@ class Project {
     this.taskList = [];
   }
 
-  // TODO: Add fromJSON method
+  static fromJSON(data) {
+    const taskList = data.taskList.map((task) => Task.fromJSON(task));
+    const project = new Project(data.name);
+
+    project.id = data.id;
+    project.taskList = taskList;
+
+    return project;
+  }
 
   edit = (name) => {
     this.name = name;
