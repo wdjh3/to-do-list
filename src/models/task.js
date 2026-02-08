@@ -1,5 +1,15 @@
 import { ChecklistItem } from "./checklistItem.js";
 
+/**
+ * @enum {string}
+ */
+const PRIORITY = Object.freeze({
+  URGENT_AND_IMPORTANT: "u&i",
+  URGENT: "u",
+  IMPORTANT: "i",
+  NONE: "n",
+});
+
 export class Task {
   // TODO: move checklist to #checklist here
   /**
