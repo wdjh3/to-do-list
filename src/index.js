@@ -198,5 +198,7 @@ const storageManager = (() => {
   return { save, load };
 })();
 
+projectController.loadData();
+
 window.projectController = projectController;
 window.storageManager = storageManager;
