@@ -1,9 +1,8 @@
 const projectController = (() => {
   let projectList = [];
 
-  // remove argument after uncommenting storageManager.load()
-  const loadData = (rawData) => {
-    // const rawData = storageManager.load();
+  const loadData = () => {
+    const rawData = storageManager.load();
 
     if (rawData && rawData.length > 0) {
       projectList = rawData.map((project) => Project.fromJSON(project));
@@ -22,7 +21,11 @@ const projectController = (() => {
     return projectList.find((project) => project.id === id);
   };
 
-  return { loadData, addProject, getProjects, getProject };
+  const sync = () => {
+    storageManager.save(projectList);
+  };
+
+  return { loadData, addProject, getProjects, getProject, sync };
 })();
 
 class Project {
