@@ -28,5 +28,5 @@ export const projectController = (() => {
     storageManager.save(projectList);
   };
 
-  return { loadData, addProject, getProjects, getProject, unsafeGet, sync };
+  return { loadData, addProject, getProjects, getProject, sync };
 })();
