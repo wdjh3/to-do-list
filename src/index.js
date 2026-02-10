@@ -1,4 +1,5 @@
 import { projectController } from "./controller/projectController.js";
+import "./styles.css";
 
 projectController.loadData();
 
