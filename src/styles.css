@@ -77,6 +77,7 @@ h6 {
 
 * {
 	/* border: 1px solid red; */
+	box-sizing: border-box;
 	font-family: "Inter", sans-serif;
 }
 
@@ -112,7 +113,9 @@ body {
 }
 
 .project-in-list {
-	padding: 0.5rem 0 0.5rem 1rem;
+	display: flex;
+	justify-content: space-between;
+
 }
 
 .project {
@@ -122,6 +125,12 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+}
+
+.project-buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
 }
 
 .current-project-title {
@@ -141,6 +150,14 @@ body {
 	font-size: 1.25rem;
 	background-color: red;
 	border-radius: 1.5rem;
+	padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.project-title,
+.task-title {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .options {
@@ -149,6 +166,8 @@ body {
 }
 
 .button {
+	border: 1px solid blue;
+	background-color: green;
 	height: 32px;
 	width: 32px;
 }
