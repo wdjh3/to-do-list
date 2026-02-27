@@ -6,7 +6,7 @@
 	<title>Document</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=edit" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=check,delete,edit,keyboard_arrow_down" />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,6 +17,9 @@
 				<p class="project-title">Project 1</p>
 				<div class="project-buttons">
 					<div class="delete-button button">
+						<span class="material-symbols-outlined">
+						delete
+						</span>
 					</div>
 					<div class="edit-button button">
 						<span class="material-symbols-outlined">
@@ -40,47 +43,118 @@
 				</div>
 			</div>
 		</div>
+		<div class="add-project">
+			+ Add new project...
+		</div>
 	</div>
 	<div class="project" id="project">
 		<h1 class="current-project-title" id="current-project-title">Project name...</h1>
 		<div class="current-project" id="current-project">
-			<div class="task" id="task-id-arst">
-				<div class="task-lean-left">
-					<div class="drop-down button"></div>
-					<p class="task-title">This is a task</p>
-				</div>
-				<div class="task-buttons">
-					<div class="delete-button button"></div>
-					<div class="edit-button button">
-						<span class="material-symbols-outlined">
-						edit
-						</span>
+			<div class="task-container">
+				<div class="task" id="task-id-arst">
+					<div class="task-lean-left">
+						<div class="drop-down button">
+							<span class="material-symbols-outlined">
+							keyboard_arrow_down
+							</span>
+						</div>
+						<p class="task-title">This is a task</p>
 					</div>
-					<div class="toggle-button button"></div>
+					<div class="task-buttons">
+						<div class="delete-button button">
+							<span class="material-symbols-outlined">
+							delete
+							</span>
+						</div>
+						<div class="edit-button button">
+							<span class="material-symbols-outlined">
+							edit
+							</span>
+						</div>
+						<div class="toggle-button button">
+							<span class="material-symbols-outlined">
+							check
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="task" id="hard-task-that-wont-work">
-				<div class="task-lean-left">
-					<div class="drop-down active button"></div>
-					<p class="task-title">Task 1</p>
+			<div class="task-container">
+				<div class="task" id="hard-task-that-wont-work">
+					<div class="task-lean-left">
+						<div class="drop-down active button">
+							<span class="material-symbols-outlined">
+							keyboard_arrow_down
+							</span>
+						</div>
+						<p class="task-title">Task 1</p>
+					</div>
+					<div class="task-buttons">
+						<div class="delete-button button">
+							<span class="material-symbols-outlined">
+							delete
+							</span>
+						</div>
+						<div class="edit-button button">
+							<span class="material-symbols-outlined">
+							edit
+							</span>
+						</div>
+						<div class="toggle-button button">
+							<span class="material-symbols-outlined">
+							check
+							</span>
+						</div>
+					</div>
 				</div>
-				<div class="task-buttons">
-					<div class="delete-button button"></div>
-					<div class="edit-button button"></div>
-					<div class="toggle-button button"></div>
+				<div class="checklist">
+					<div class="checklist-item" id="cli-id">
+						<p class="checklist-item-title">This is a checklist item</p>
+						<div class="checklist-item-buttons">
+							<div class="edit-button button">
+								<span class="material-symbols-outlined">
+								edit
+								</span>
+							</div>
+							<div class="toggle-button button">
+								<span class="material-symbols-outlined">
+								check
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="checklist-item" id="cli-id">
+						<p class="checklist-item-title">This is one too.</p>
+						<div class="checklist-item-buttons">
+							<div class="edit-button button"></div>
+							<div class="toggle-button button"></div>
+						</div>
+					</div>
+					<div class="checklist-item" id="cli-id">
+						<p class="checklist-item-title">This is a checklist item that has a very long title in order to test ellipsis and test text-overflow, but it wasn't long enough so i had to add more words to trigger the thing and test the thing so users don't complain.</p>
+						<div class="checklist-item-buttons">
+							<div class="edit-button button"></div>
+							<div class="toggle-button button"></div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="task" id="why-are-you-looking-at-this-just-look-at-the-latest-commit">
-				<div class="task-lean-left">
-					<div class="drop-down button"></div>
-					<p class="task-title">Another absurdly long title in order to make sure ellipsis work, and i think they might if i set a few selectors correct i think, well this was not long enough to test what i wanted, so I'm adding ome more stuff to test it</p>
-				</div>
-				<div class="task-buttons">
-					<div class="delete-button button"></div>
-					<div class="edit-button button"></div>
-					<div class="toggle-button button"></div>
+			<div class="task-container">
+				<div class="task" id="why-are-you-looking-at-this-just-look-at-the-latest-commit">
+					<div class="task-lean-left">
+						<div class="drop-down button"></div>
+						<p class="task-title">Another absurdly long title in order to make sure ellipsis work, and i think they might if i set a few selectors correct i think, well this was not long enough to test what i wanted, so I'm adding ome more stuff to test it</p>
+					</div>
+					<div class="task-buttons">
+						<div class="delete-button button"></div>
+						<div class="edit-button button"></div>
+						<div class="toggle-button button"></div>
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="add-task">
+			+ Add new task...
 		</div>
 	</div>
 </body>

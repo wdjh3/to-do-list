@@ -96,17 +96,19 @@ body {
 	padding: 12px;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1rem;
 }
 
 .project-list-title {
 	background-color: #c69f6c;
 	padding: 0.5rem 0 0.5rem 1rem;
 	border-radius: 24px;
+	margin-bottom: 1rem;
 }
 
 .project-list,
-.current-project {
+.current-project,
+.checklist {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -118,7 +120,7 @@ body {
 	background-color: navajowhite;
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1rem;
 }
 
 .project-in-list {
@@ -132,10 +134,15 @@ body {
 
 .project-buttons,
 .task-lean-left,
-.task-buttons {
+.task-buttons,
+.checklist-item-buttons {
 	display: flex;
 	flex-direction: row;
 	gap: 0.5rem;
+}
+
+.drop-down.active {
+	rotate: 180deg;
 }
 
 .task-lean-left {
@@ -151,16 +158,31 @@ body {
 	padding: 1rem 0 1rem 2.5rem;
 	height: 5rem;
 	border-radius: 24px;
+	margin-bottom: 1rem;
 }
 
 .project-in-list,
-.task {
+.task,
+.checklist-item,
+.add-project,
+.add-task {
 	display: flex;
 	flex-direction: row;
 	font-size: 1.25rem;
 	border-radius: 1.5rem;
 	padding: 0.5rem 1rem 0.5rem 1rem;
 	justify-content: space-between;
+}
+
+.add-project,
+.add-task {
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.add-project:hover,
+.add-task:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+	cursor: pointer;
 }
 
 .task {
@@ -172,8 +194,23 @@ body {
 	cursor: pointer;
 }
 
+.checklist {
+	margin-top: 12px;
+	padding-left: 4rem;
+}
+
+.checklist-item {
+	background-color: #b28452;
+}
+
+.checklist-item:hover {
+	background-color: #845321;
+	cursor: pointer;
+}
+
 .project-title,
-.task-title {
+.task-title,
+.checklist-item-title {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -201,5 +238,3 @@ body {
 .project-buttons>.button:hover {
 	background-color: mistyrose;
 }
-
-.current-project {}
