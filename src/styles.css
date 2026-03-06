@@ -94,9 +94,6 @@ body {
 	height: 100vh;
 	grid-area: sidebar;
 	padding: 12px;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
 }
 
 .project-list-title {
@@ -108,7 +105,10 @@ body {
 
 .project-list,
 .current-project,
-.checklist {
+.checklist-container,
+.checklist,
+.project,
+.projects-section {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -118,9 +118,6 @@ body {
 	grid-area: main;
 	padding: 12px;
 	background-color: navajowhite;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
 }
 
 .project-in-list {
@@ -165,7 +162,8 @@ body {
 .task,
 .checklist-item,
 .add-project,
-.add-task {
+.add-task,
+.add-checklist-item {
 	display: flex;
 	flex-direction: row;
 	font-size: 1.25rem;
@@ -175,12 +173,14 @@ body {
 }
 
 .add-project,
-.add-task {
+.add-task,
+.add-checklist-item {
 	color: rgba(0, 0, 0, 0.8);
 }
 
 .add-project:hover,
-.add-task:hover {
+.add-task:hover,
+.add-checklist-item:hover {
 	background-color: rgba(0, 0, 0, 0.3);
 	cursor: pointer;
 }
@@ -194,7 +194,7 @@ body {
 	cursor: pointer;
 }
 
-.checklist {
+.checklist-container {
 	margin-top: 12px;
 	padding-left: 4rem;
 }
