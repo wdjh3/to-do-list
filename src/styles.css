@@ -125,7 +125,7 @@ body {
 }
 
 .project-in-list:hover {
-	background-color: #8b4513;
+	background-color: #6f370f;
 	cursor: pointer;
 }
 
@@ -140,6 +140,14 @@ body {
 
 .drop-down.active {
 	rotate: 180deg;
+}
+
+.toggle-button.active {
+	background-color: #ffb5e6;
+}
+
+.toggle-button.active:hover {
+	background-color: #5c2e00;
 }
 
 .task-lean-left {
@@ -183,6 +191,71 @@ body {
 .add-checklist-item:hover {
 	background-color: rgba(0, 0, 0, 0.3);
 	cursor: pointer;
+}
+
+.form-dialog {
+	border: none;
+	border-radius: 1.5rem;
+	padding: 2rem;
+	font-size: 1.25rem;
+}
+
+form.input-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.input-form > .header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.input-unit {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.input-unit > label {
+	font-size: 1rem;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.input-unit > input {
+	border-radius: 0.25rem;
+	border: 1px solid black;
+	padding: 1px 0.5rem;
+}
+
+.input-form .header .button {
+	height: 3rem;
+	width: 3rem;
+}
+
+.input-form > button[type="submit"] {
+	border-radius: 1.5rem; 
+	margin-top: 1rem;
+	padding: 0.5rem 1rem;
+	align-self: flex-end;
+}
+
+.input-form button {
+	background-color: #ccc;
+	border: none;
+}
+
+.input-form > button[type="submit"]:hover,
+.input-form .header .button:hover {
+	background-color: #aaa;
+	cursor: pointer;
+}
+
+.input-form > button[type="submit"]:active,
+.input-form .header .button:active {
+	background-color: #666;
 }
 
 .task {
