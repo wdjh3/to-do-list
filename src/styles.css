@@ -82,6 +82,7 @@ h6 {
 }
 
 body {
+	height: 100vh;
 	display: grid;
 	grid-template-columns: 20vw 80vw;
 	grid-template-areas:
@@ -91,9 +92,15 @@ body {
 
 .projects-section {
 	background-color: bisque;
-	height: 100vh;
+	max-height: 100vh;
 	grid-area: sidebar;
-	padding: 12px;
+	padding: 12px 12px 300px 12px;
+}
+
+.flexible {
+	flex: 0 1 auto;
+	min-width: 0;
+	overflow-y: scroll;
 }
 
 .project-list-title {
@@ -116,7 +123,8 @@ body {
 
 .project {
 	grid-area: main;
-	padding: 12px;
+	max-height: 100vh;
+	padding: 12px 12px 160px;
 	background-color: navajowhite;
 }
 
