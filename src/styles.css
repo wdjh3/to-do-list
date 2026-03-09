@@ -165,7 +165,7 @@ body {
 
 .current-project-title {
 	background-color: burlywood;
-	color: rgba(0, 0, 0, 0.3);
+	color: rgb(0, 0, 0);
 	display: flex;
 	align-items: center;
 	padding: 1rem 0 1rem 2.5rem;

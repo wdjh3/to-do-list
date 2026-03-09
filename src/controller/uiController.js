@@ -1,5 +1,6 @@
 const addNewProjectBtn = document.getElementById("add-new-project");
 const addNewTaskBtn = document.getElementById("add-new-task");
+const currentProjectTitleElement = document.getElementById("current-project-title");
 const currentProjectContainer = document.getElementById("current-project");
 const projectList = document.getElementById("project-list");
 const projectFormDialog = document.getElementById("project-form-dialog");
@@ -115,7 +116,8 @@ export const uiController = (() => {
     }
     
     const currentProject = data.find((project) => project.id === currentProjectId);
-    const taskList = currentProject.taskList;
+    currentProjectTitleElement.textContent = currentProject.name;
+    const taskList = currentProject ? currentProject.taskList : [];
     for (const task of taskList) {
       console.log(task);
       const taskContainerDiv = document.createElement("div");
@@ -148,6 +150,45 @@ export const uiController = (() => {
 					</div>
 				</div>
       `;
+      if (task.hasDropdown) {
+        console.log(task.title + " has dropdown")
+        const checklistContainerDiv = document.createElement("div");
+        checklistContainerDiv.classList.add("checklist-container");
+        checklistContainerDiv.innerHTML = `
+          <div class="checklist"></div>
+					<div class="add-checklist-item">
+						+ Add new checklist item...
+					</div>
+        `;
+        for (const checklistItem of task.checklist) {
+          console.log(checklistItem);
+          const checklistItemElement = document.createElement("div");
+          checklistItemElement.classList.add("checklist-item");
+          checklistItemElement.id = checklistItem.id;
+          checklistItemElement.innerHTML = `
+            <p class="checklist-item-title">${checklistItem.title}</p>
+            <div class="checklist-item-buttons">
+              <div class="delete-button button">
+                <span class="material-symbols-outlined">
+                delete
+                </span>
+              </div>
+              <div class="edit-button button">
+                <span class="material-symbols-outlined">
+                edit
+                </span>
+              </div>
+              <div class="toggle-button button active">
+                <span class="material-symbols-outlined">
+                check
+                </span>
+              </div>
+            </div>
+          `
+          checklistContainerDiv.querySelector(".checklist").appendChild(checklistItemElement);
+        }
+        taskContainerDiv.appendChild(checklistContainerDiv);
+      }
       currentProjectContainer.appendChild(taskContainerDiv);
     }
     return true;
