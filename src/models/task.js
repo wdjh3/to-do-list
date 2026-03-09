@@ -78,6 +78,10 @@ export class Task {
     return this.checklist.find((item) => item.id === id);
   };
 
+  toggleDropdown = () => {
+    this.hasDropdown = !this.hasDropdown;
+  };
+
   toggleDone = () => {
     this.isDone = !this.isDone;
   };

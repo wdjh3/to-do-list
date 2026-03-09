@@ -1,3 +1,5 @@
+import { coordinator } from "./coordinator.js";
+
 const addNewProjectBtn = document.getElementById("add-new-project");
 const addNewTaskBtn = document.getElementById("add-new-task");
 const currentProjectTitleElement = document.getElementById("current-project-title");
@@ -21,12 +23,14 @@ export const uiController = (() => {
       projectFormDialog.querySelector(".title").textContent = "Add Project";
       projectFormDialog.querySelector("button[type='submit']").textContent =
         "Add Project";
+      coordinator.setFormMode("ADD");
       projectFormDialog.showModal();
     });
     addNewTaskBtn.addEventListener("click", () => {
       taskFormDialog.querySelector(".title").textContent = "Add Task";
       taskFormDialog.querySelector("button[type='submit']").textContent =
         "Add Task";
+      coordinator.setFormMode("ADD");
       taskFormDialog.showModal();
     });
     currentProjectContainer.addEventListener("click", (e) => {
@@ -36,6 +40,7 @@ export const uiController = (() => {
         checklistItemFormDialog.querySelector(
           "button[type='submit']",
         ).textContent = "Add Checklist Item";
+        coordinator.setFormMode("ADD");
         checklistItemFormDialog.showModal();
       }
 
@@ -44,6 +49,7 @@ export const uiController = (() => {
         taskFormDialog.querySelector(".title").textContent = "Edit Task";
         taskFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Task";
+        coordinator.setFormMode("EDIT");
         taskFormDialog.showModal();
       }
 
@@ -57,6 +63,7 @@ export const uiController = (() => {
         checklistItemFormDialog.querySelector(
           "button[type='submit']",
         ).textContent = "Edit Checklist Item";
+        coordinator.setFormMode("EDIT");
         checklistItemFormDialog.showModal();
       }
     });
@@ -66,18 +73,25 @@ export const uiController = (() => {
         projectFormDialog.querySelector(".title").textContent = "Edit Project";
         projectFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Project";
+        coordinator.setFormMode("EDIT");
         projectFormDialog.showModal();
       }
     });
 
     for (const formDialog of formDialogs) {
-      formDialog.addEventListener("close", () => {
+      formDialog.addEventListener("close", (e) => {
+        console.log(formDialog.returnValue);
+        if (formDialog.returnValue === "submit") {
+          coordinator.handleFormRequest(new FormData(formDialog.querySelector("form")))
+        }
+
         formDialog.querySelector(".input-form").reset();
       });
 
       // Close form if click outside dialog window
       formDialog.addEventListener("click", (e) => {
         const dialogDimensions = formDialog.getBoundingClientRect();
+        formDialog.returnValue = "cancel";
 
         if (
           e.clientX < dialogDimensions.left ||
@@ -93,6 +107,7 @@ export const uiController = (() => {
 
   const render = (data, currentProjectId) => {
     projectList.innerHTML = "";
+    currentProjectContainer.innerHTML = "";
     for (const project of data) {
       const projectDiv = document.createElement("div");
       projectDiv.classList.add("project-in-list");
@@ -119,7 +134,6 @@ export const uiController = (() => {
     currentProjectTitleElement.textContent = currentProject.name;
     const taskList = currentProject ? currentProject.taskList : [];
     for (const task of taskList) {
-      console.log(task);
       const taskContainerDiv = document.createElement("div");
       taskContainerDiv.innerHTML = `
         <div class="task" id="${task.id}">
@@ -151,7 +165,6 @@ export const uiController = (() => {
 				</div>
       `;
       if (task.hasDropdown) {
-        console.log(task.title + " has dropdown")
         const checklistContainerDiv = document.createElement("div");
         checklistContainerDiv.classList.add("checklist-container");
         checklistContainerDiv.innerHTML = `
@@ -161,7 +174,6 @@ export const uiController = (() => {
 					</div>
         `;
         for (const checklistItem of task.checklist) {
-          console.log(checklistItem);
           const checklistItemElement = document.createElement("div");
           checklistItemElement.classList.add("checklist-item");
           checklistItemElement.id = checklistItem.id;

@@ -27,26 +27,28 @@
 
 	<dialog id="project-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
+			<input type="hidden" name="item-type" value="project">
 			<div class="header">
 				<h2 class="title">Add project</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
 					<span class="material-symbols-outlined"> close </span>
 				</button>
 			</div>
-			<div class="input-unit"><label for="project-title">Project Title</label><input required type="text" id="project-title"></div>
-			<button type="submit">Add Project</button>
+			<div class="input-unit"><label for="project-title">Project Title</label><input required type="text" name="project-title" id="project-title"></div>
+			<button type="submit" value="submit">Add Project</button>
 		</form>
 	</dialog>
 	<dialog id="task-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
+			<input type="hidden" name="item-type" value="task">
 			<div class="header">
 				<h2 class="title">Add task</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
 					<span class="material-symbols-outlined"> close </span>
 				</button>
 			</div>
-			<div class="input-unit"><label for="task-title">Task Title</label><input required type="text" id="task-title"></div>
-			<div class="input-unit"><label for="task-due-date">Due Date</label><input required type="date" id="task-due-date"></div>
+			<div class="input-unit"><label for="task-title">Task Title</label><input required type="text" name="task-title" id="task-title"></div>
+			<div class="input-unit"><label for="task-due-date">Due Date</label><input required type="date" name="task-due-date" id="task-due-date"></div>
 			<div class="input-unit"><label for="task-priority">Priority</label>
 				<select name="task-priority" id="task-priority" class="task-priority-selection">
 					<option value="high">High</option>
@@ -54,21 +56,23 @@
 					<option selected value="low">Low</option>
 				</select>
 			</div>
-			<div class="input-unit"><label for="task-description">Description</label><input type="text" id="task-description"></div>
-			<button type="submit">Add Task</button>
+			<div class="input-unit"><label for="task-description">Description</label><input type="text" name="task-description" id="task-description"></div>
+			<button type="submit" value="submit">Add Task</button>
 		</form>
 	</dialog>
 	<dialog id="checklist-item-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
+			<input type="hidden" name="item-type" value="checklist-item">
+			<input type="hidden" name="task-id" value="checklist-item">
 			<div class="header">
 				<h2 class="title">Add checklist item</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
 					<span class="material-symbols-outlined"> close </span>
 				</button>
 			</div>
-			<div class="input-unit"><label for="checklist-item-title">Item title</label><input required type="text" id="checklist-item-title"></div>
-			<div class="input-unit"><label for="checklist-item-description">Description</label><input required type="text" id="checklist-item-description"></div>
-			<button type="submit">Add Checklist Item</button>
+			<div class="input-unit"><label for="checklist-item-title">Item title</label><input required type="text" name="checklist-item-title" id="checklist-item-title"></div>
+			<div class="input-unit"><label for="checklist-item-description">Description</label><input required type="text" name="checklist-item-description" id="checklist-item-description"></div>
+			<button type="submit" value="submit">Add Checklist Item</button>
 		</form>
 	</dialog>
 </body>
