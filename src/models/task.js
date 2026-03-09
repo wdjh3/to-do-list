@@ -28,6 +28,7 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.checklist = [];
+    this.hasDropdown = false;
     this.isDone = false;
   }
 
@@ -44,6 +45,7 @@ export class Task {
 
     task.id = data.id;
     task.checklist = checklist;
+    this.hasDropdown = true; // TODO: switch back to false after testing
     task.isDone = data.isDone;
 
     return task;

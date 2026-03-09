@@ -100,7 +100,7 @@ body {
 .flexible {
 	flex: 0 1 auto;
 	min-width: 0;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .project-list-title {

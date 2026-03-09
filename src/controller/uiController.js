@@ -1,6 +1,6 @@
 const addNewProjectBtn = document.getElementById("add-new-project");
 const addNewTaskBtn = document.getElementById("add-new-task");
-const currentProject = document.getElementById("current-project");
+const currentProjectContainer = document.getElementById("current-project");
 const projectList = document.getElementById("project-list");
 const projectFormDialog = document.getElementById("project-form-dialog");
 const taskFormDialog = document.getElementById("task-form-dialog");
@@ -28,7 +28,7 @@ export const uiController = (() => {
         "Add Task";
       taskFormDialog.showModal();
     });
-    currentProject.addEventListener("click", (e) => {
+    currentProjectContainer.addEventListener("click", (e) => {
       if (e.target.closest(".add-checklist-item")) {
         checklistItemFormDialog.querySelector(".title").textContent =
           "Add Checklist Item";
@@ -90,7 +90,68 @@ export const uiController = (() => {
     }
   };
 
-  const sync = () => {};
+  const render = (data, currentProjectId) => {
+    projectList.innerHTML = "";
+    for (const project of data) {
+      const projectDiv = document.createElement("div");
+      projectDiv.classList.add("project-in-list");
+      projectDiv.id = project.id;
+      projectDiv.innerHTML = `
+        <p class="project-title">${project.name}</p>
+        <div class="project-buttons">
+          <div class="delete-button button">
+            <span class="material-symbols-outlined">
+            delete
+            </span>
+          </div>
+          <div class="edit-button button">
+            <span class="material-symbols-outlined">
+            edit
+            </span>
+          </div>
+        </div>
+      `;
+      projectList.appendChild(projectDiv);
+    }
+    
+    const currentProject = data.find((project) => project.id === currentProjectId);
+    const taskList = currentProject.taskList;
+    for (const task of taskList) {
+      console.log(task);
+      const taskContainerDiv = document.createElement("div");
+      taskContainerDiv.innerHTML = `
+        <div class="task" id="${task.id}">
+					<div class="task-lean-left">
+						<div class="drop-down button">
+							<span class="material-symbols-outlined">
+							keyboard_arrow_down
+							</span>
+						</div>
+						<p class="task-title">${task.title}</p>
+					</div>
+					<div class="task-buttons">
+						<div class="delete-button button">
+							<span class="material-symbols-outlined">
+							delete
+							</span>
+						</div>
+						<div class="edit-button button">
+							<span class="material-symbols-outlined">
+							edit
+							</span>
+						</div>
+						<div class="toggle-button button">
+							<span class="material-symbols-outlined">
+							check
+							</span>
+						</div>
+					</div>
+				</div>
+      `;
+      currentProjectContainer.appendChild(taskContainerDiv);
+    }
+    return true;
+  };
 
-  return { start };
+  return { start, render };
 })();

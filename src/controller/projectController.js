@@ -3,6 +3,7 @@ import { storageManager } from "../storage/storageManager.js";
 
 export const projectController = (() => {
   let projectList = [];
+  let currentProjectId;
 
   const loadData = () => {
     const rawData = storageManager.load();
@@ -24,9 +25,26 @@ export const projectController = (() => {
     return projectList.find((project) => project.id === id);
   };
 
+  const getCurrentProjectId = () => {
+    return currentProjectId;
+  };
+
+  const setCurrentProjectId = (projectId) => {
+    currentProjectId = projectId;
+    return true;
+  };
+
   const sync = () => {
     storageManager.save(projectList);
   };
 
-  return { loadData, addProject, getProjects, getProject, sync };
+  return {
+    loadData,
+    addProject,
+    getProjects,
+    getProject,
+    getCurrentProjectId,
+    setCurrentProjectId,
+    sync,
+  };
 })();
