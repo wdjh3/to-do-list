@@ -205,8 +205,22 @@ export const uiController = (() => {
         formDialog.querySelector(".input-form").reset();
       });
 
-      // Close form if click outside dialog window
       formDialog.addEventListener("click", (e) => {
+        // Close form if "X" button is clicked
+        if (e.target.closest("button")) {
+          if (e.target.closest("button").classList.contains("cancel-button")) {
+            formDialog.returnValue = "cancel";
+            formDialog.close()
+            return;
+          }
+        }
+
+        // This is to prevent "Enter" from being treated as an out of bounds mouse click
+        if (e.detail === 0) {
+          return;
+        }
+
+        // Close form if click outside dialog window
         const dialogDimensions = formDialog.getBoundingClientRect();
         formDialog.returnValue = "cancel";
 
@@ -225,6 +239,7 @@ export const uiController = (() => {
   const render = (data, currentProjectId) => {
     projectList.innerHTML = "";
     currentProjectContainer.innerHTML = "";
+
     for (const project of data) {
       const projectDiv = document.createElement("div");
       projectDiv.classList.add("project-in-list");
@@ -250,8 +265,11 @@ export const uiController = (() => {
     const currentProject = data.find(
       (project) => project.id === currentProjectId,
     );
-    currentProjectTitleElement.textContent = currentProject.name;
+    currentProjectTitleElement.textContent = currentProject
+      ? currentProject.name
+      : "Project name...";
     const taskList = currentProject ? currentProject.taskList : [];
+
     for (const task of taskList) {
       const taskContainerDiv = document.createElement("div");
       taskContainerDiv.classList.add("task-container");

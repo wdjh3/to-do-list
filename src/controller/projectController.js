@@ -10,6 +10,8 @@ export const projectController = (() => {
 
     if (rawData && rawData.length > 0) {
       projectList = rawData.map((project) => Project.fromJSON(project));
+    } else {
+      projectList.push(new Project("New Project"));
     }
   };
 
