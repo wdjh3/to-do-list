@@ -87,14 +87,29 @@ export const coordinator = (() => {
 
     projectController.sync();
 
-    const currentProjectId = projectController.getCurrentProjectId()
+    const currentProjectId = projectController.getCurrentProjectId();
 
     if (currentProjectId === id) {
       if (projectController.getProjects().length === 0) {
         return;
       }
-      projectController.setCurrentProjectId(projectController.getProjects()[0].id);
+      projectController.setCurrentProjectId(
+        projectController.getProjects()[0].id,
+      );
     }
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
+  const handleToggleTaskDropdownRequest = (id) => {
+    projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(id)
+      .toggleDropdown();
+
+    projectController.sync();
     uiController.render(
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
@@ -105,20 +120,33 @@ export const coordinator = (() => {
     projectController
       .getProject(projectController.getCurrentProjectId())
       .getTask(id)
-      .toggleDone()
+      .toggleDone();
 
     projectController.sync();
     uiController.render(
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
     );
-
-  }
+  };
 
   const handleDeleteTaskRequest = (id) => {
     projectController
       .getProject(projectController.getCurrentProjectId())
       .deleteTask(id);
+
+    projectController.sync();
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
+  const handleToggleChecklistItemDoneRequest = (taskId, checklistItemId) => {
+    projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(taskId)
+      .getChecklistItem(checklistItemId)
+      .toggleDone();
 
     projectController.sync();
     uiController.render(
@@ -145,8 +173,10 @@ export const coordinator = (() => {
     setFormMode,
     setCurrentProject,
     handleFormRequest,
+    handleToggleTaskDropdownRequest,
     handleToggleTaskDoneRequest,
     handleDeleteTaskRequest,
+    handleToggleChecklistItemDoneRequest,
     handleDeleteChecklistItemRequest,
     handleDeleteProjectRequest,
   };

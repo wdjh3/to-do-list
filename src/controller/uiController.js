@@ -49,6 +49,12 @@ export const uiController = (() => {
         checklistItemFormDialog.showModal();
       }
 
+      // Toggle Task dropdown
+      if (e.target.closest(".drop-down") && e.target.closest(".task")) {
+        console.log("toggle dropdown for " + e.target.closest(".task").id)
+        coordinator.handleToggleTaskDropdownRequest(e.target.closest(".task").id);
+      }
+
       // Toggle Task done
       if (e.target.closest(".toggle-button") && e.target.closest(".task")) {
         coordinator.handleToggleTaskDoneRequest(e.target.closest(".task").id);
@@ -75,6 +81,17 @@ export const uiController = (() => {
         } else {
           console.log("Action cancelled.");
         }
+      }
+
+      // Toggle Checklist Item done
+      if (
+        e.target.closest(".toggle-button") &&
+        e.target.closest(".checklist-item")
+      ) {
+        coordinator.handleToggleChecklistItemDoneRequest(
+          e.target.closest(".task-container").querySelector(".task").id,
+          e.target.closest(".checklist-item").id,
+        );
       }
 
       // Handles opening the edit form dialog when the edit button is pressed for ChecklistItems
@@ -116,7 +133,11 @@ export const uiController = (() => {
     });
 
     projectList.addEventListener("click", (e) => {
-      if (e.target.closest(".project-in-list")) {
+      // Switching projects
+      if (
+        e.target.closest(".project-in-list") &&
+        !e.target.closest(".project-buttons") // Only direct clicks on the tab change
+      ) {
         coordinator.setCurrentProject(e.target.closest(".project-in-list").id);
       }
 
@@ -131,9 +152,7 @@ export const uiController = (() => {
       }
 
       // Delete Project
-      if (
-        e.target.closest(".delete-button")
-      ) {
+      if (e.target.closest(".delete-button")) {
         const userConfirmed = confirm(`Are you sure you want to delete this?`);
 
         if (userConfirmed) {
@@ -212,7 +231,7 @@ export const uiController = (() => {
       taskContainerDiv.innerHTML = `
         <div class="task" id="${task.id}">
 					<div class="task-lean-left">
-						<div class="drop-down button">
+						<div class="drop-down button ${task.hasDropdown ? "active" : ""}">
 							<span class="material-symbols-outlined">
 							keyboard_arrow_down
 							</span>
