@@ -35,6 +35,7 @@ export const uiController = (() => {
     });
     currentProjectContainer.addEventListener("click", (e) => {
       if (e.target.closest(".add-checklist-item")) {
+        checklistItemFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task-container").querySelector(".task").id;
         checklistItemFormDialog.querySelector(".title").textContent =
           "Add Checklist Item";
         checklistItemFormDialog.querySelector(
@@ -46,6 +47,7 @@ export const uiController = (() => {
 
       // Handles opening the edit form dialog when the edit button is pressed for Tasks
       if (e.target.closest(".edit-button") && e.target.closest(".task")) {
+        taskFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task").id;
         taskFormDialog.querySelector(".title").textContent = "Edit Task";
         taskFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Task";
@@ -58,6 +60,8 @@ export const uiController = (() => {
         e.target.closest(".edit-button") &&
         e.target.closest(".checklist-item")
       ) {
+        checklistItemFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task-container").querySelector(".task").id;
+        checklistItemFormDialog.querySelector("input[name='checklist-item-id']").value = e.target.closest(".checklist-item").id;
         checklistItemFormDialog.querySelector(".title").textContent =
           "Edit Checklist Item";
         checklistItemFormDialog.querySelector(
@@ -70,6 +74,7 @@ export const uiController = (() => {
 
     projectList.addEventListener("click", (e) => {
       if (e.target.closest(".edit-button")) {
+        projectFormDialog.querySelector("input[name='project-id']").value = e.target.closest(".project-in-list").id;
         projectFormDialog.querySelector(".title").textContent = "Edit Project";
         projectFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Project";
@@ -135,6 +140,7 @@ export const uiController = (() => {
     const taskList = currentProject ? currentProject.taskList : [];
     for (const task of taskList) {
       const taskContainerDiv = document.createElement("div");
+      taskContainerDiv.classList.add("task-container");
       taskContainerDiv.innerHTML = `
         <div class="task" id="${task.id}">
 					<div class="task-lean-left">

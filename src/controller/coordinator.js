@@ -33,8 +33,33 @@ export const coordinator = (() => {
       } else if (itemType === "checklist-item") {
         projectController
           .getProject(projectController.getCurrentProjectId())
-          .getTask()
+          .getTask(formDataObject["task-id"])
           .addChecklistItem(
+            formDataObject["checklist-item-title"],
+            formDataObject["checklist-item-description"],
+          );
+      }
+    } else if (formMode === "EDIT") {
+      if (itemType === "project") {
+        projectController
+          .getProject(formDataObject["project-id"])
+          .edit(formDataObject["project-title"]);
+      } else if (itemType === "task") {
+        projectController
+          .getProject(projectController.getCurrentProjectId())
+          .getTask(formDataObject["task-id"])
+          .edit(
+            formDataObject["task-title"],
+            formDataObject["task-description"],
+            formDataObject["task-due-date"],
+            formDataObject["task-priority"],
+          );
+      } else if (itemType === "checklist-item") {
+        projectController
+          .getProject(projectController.getCurrentProjectId())
+          .getTask(formDataObject["task-id"])
+          .getChecklistItem(formDataObject["checklist-item-id"])
+          .edit(
             formDataObject["checklist-item-title"],
             formDataObject["checklist-item-description"],
           );

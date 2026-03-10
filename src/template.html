@@ -28,6 +28,7 @@
 	<dialog id="project-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
 			<input type="hidden" name="item-type" value="project">
+			<input type="hidden" name="project-id" value="">
 			<div class="header">
 				<h2 class="title">Add project</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
@@ -41,6 +42,7 @@
 	<dialog id="task-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
 			<input type="hidden" name="item-type" value="task">
+			<input type="hidden" name="task-id" value="">
 			<div class="header">
 				<h2 class="title">Add task</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
@@ -63,7 +65,8 @@
 	<dialog id="checklist-item-form-dialog" class="form-dialog">
 		<form action="" method="dialog" class="input-form">
 			<input type="hidden" name="item-type" value="checklist-item">
-			<input type="hidden" name="task-id" value="checklist-item">
+			<input type="hidden" name="task-id" value="">
+			<input type="hidden" name="checklist-item-id" value="">
 			<div class="header">
 				<h2 class="title">Add checklist item</h2>
 				<button value="cancel" formnovalidate class="cancel-button button">
