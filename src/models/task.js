@@ -28,7 +28,7 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.checklist = [];
-    this.hasDropdown = true; // TODO: Change back after testing
+    this.hasDropdown = false;
     this.isDone = false;
   }
 
