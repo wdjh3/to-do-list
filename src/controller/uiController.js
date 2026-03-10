@@ -263,6 +263,7 @@ export const uiController = (() => {
 							keyboard_arrow_down
 							</span>
 						</div>
+						<p class="task-due-date">${task.dueDate}</p>
 						<p class="task-title">${task.title}</p>
 					</div>
 					<div class="task-buttons">
