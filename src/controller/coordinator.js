@@ -12,6 +12,14 @@ export const coordinator = (() => {
     formMode = mode;
   };
 
+  const setCurrentProject = (id) => {
+    projectController.setCurrentProjectId(id);
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
   const handleFormRequest = (formData) => {
     console.log(formMode);
     const formDataObject = Object.fromEntries(formData);
@@ -75,10 +83,18 @@ export const coordinator = (() => {
   };
 
   const handleDeleteProjectRequest = (id) => {
-    projectController
-      .deleteProject(id);
+    projectController.deleteProject(id);
 
     projectController.sync();
+
+    const currentProjectId = projectController.getCurrentProjectId()
+
+    if (currentProjectId === id) {
+      if (projectController.getProjects().length === 0) {
+        return;
+      }
+      projectController.setCurrentProjectId(projectController.getProjects()[0].id);
+    }
     uiController.render(
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
@@ -113,6 +129,7 @@ export const coordinator = (() => {
   return {
     getFormMode,
     setFormMode,
+    setCurrentProject,
     handleFormRequest,
     handleDeleteTaskRequest,
     handleDeleteChecklistItemRequest,

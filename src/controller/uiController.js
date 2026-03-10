@@ -111,6 +111,10 @@ export const uiController = (() => {
     });
 
     projectList.addEventListener("click", (e) => {
+      if (e.target.closest(".project-in-list")) {
+        coordinator.setCurrentProject(e.target.closest(".project-in-list").id);
+      }
+
       if (e.target.closest(".edit-button")) {
         projectFormDialog.querySelector("input[name='project-id']").value =
           e.target.closest(".project-in-list").id;
