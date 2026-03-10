@@ -66,11 +66,56 @@ export const coordinator = (() => {
       }
     }
 
+    projectController.sync();
+
     uiController.render(
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
     );
   };
 
-  return { getFormMode, setFormMode, handleFormRequest };
+  const handleDeleteProjectRequest = (id) => {
+    projectController
+      .deleteProject(id);
+
+    projectController.sync();
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
+  const handleDeleteTaskRequest = (id) => {
+    projectController
+      .getProject(projectController.getCurrentProjectId())
+      .deleteTask(id);
+
+    projectController.sync();
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
+  const handleDeleteChecklistItemRequest = (taskId, checklistItemId) => {
+    projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(taskId)
+      .deleteChecklistItem(checklistItemId);
+
+    projectController.sync();
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+  };
+
+  return {
+    getFormMode,
+    setFormMode,
+    handleFormRequest,
+    handleDeleteTaskRequest,
+    handleDeleteChecklistItemRequest,
+    handleDeleteProjectRequest,
+  };
 })();

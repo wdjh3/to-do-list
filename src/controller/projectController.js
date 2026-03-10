@@ -17,6 +17,10 @@ export const projectController = (() => {
     projectList.push(new Project(name));
   };
 
+  const deleteProject = (id) => {
+    projectList = projectList.filter((project) => project.id !== id);
+  };
+
   const getProjects = () => {
     return JSON.parse(JSON.stringify(projectList));
   };
@@ -41,6 +45,7 @@ export const projectController = (() => {
   return {
     loadData,
     addProject,
+    deleteProject,
     getProjects,
     getProject,
     getCurrentProjectId,

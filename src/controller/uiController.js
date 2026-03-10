@@ -2,7 +2,9 @@ import { coordinator } from "./coordinator.js";
 
 const addNewProjectBtn = document.getElementById("add-new-project");
 const addNewTaskBtn = document.getElementById("add-new-task");
-const currentProjectTitleElement = document.getElementById("current-project-title");
+const currentProjectTitleElement = document.getElementById(
+  "current-project-title",
+);
 const currentProjectContainer = document.getElementById("current-project");
 const projectList = document.getElementById("project-list");
 const projectFormDialog = document.getElementById("project-form-dialog");
@@ -33,9 +35,11 @@ export const uiController = (() => {
       coordinator.setFormMode("ADD");
       taskFormDialog.showModal();
     });
+
     currentProjectContainer.addEventListener("click", (e) => {
       if (e.target.closest(".add-checklist-item")) {
-        checklistItemFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task-container").querySelector(".task").id;
+        checklistItemFormDialog.querySelector("input[name='task-id']").value =
+          e.target.closest(".task-container").querySelector(".task").id;
         checklistItemFormDialog.querySelector(".title").textContent =
           "Add Checklist Item";
         checklistItemFormDialog.querySelector(
@@ -47,7 +51,8 @@ export const uiController = (() => {
 
       // Handles opening the edit form dialog when the edit button is pressed for Tasks
       if (e.target.closest(".edit-button") && e.target.closest(".task")) {
-        taskFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task").id;
+        taskFormDialog.querySelector("input[name='task-id']").value =
+          e.target.closest(".task").id;
         taskFormDialog.querySelector(".title").textContent = "Edit Task";
         taskFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Task";
@@ -55,13 +60,28 @@ export const uiController = (() => {
         taskFormDialog.showModal();
       }
 
+      // Delete Task
+      if (e.target.closest(".delete-button") && e.target.closest(".task")) {
+        const userConfirmed = confirm(`Are you sure you want to delete this?`);
+
+        if (userConfirmed) {
+          coordinator.handleDeleteTaskRequest(e.target.closest(".task").id);
+          console.log("Action confirmed!");
+        } else {
+          console.log("Action cancelled.");
+        }
+      }
+
       // Handles opening the edit form dialog when the edit button is pressed for ChecklistItems
       if (
         e.target.closest(".edit-button") &&
         e.target.closest(".checklist-item")
       ) {
-        checklistItemFormDialog.querySelector("input[name='task-id']").value = e.target.closest(".task-container").querySelector(".task").id;
-        checklistItemFormDialog.querySelector("input[name='checklist-item-id']").value = e.target.closest(".checklist-item").id;
+        checklistItemFormDialog.querySelector("input[name='task-id']").value =
+          e.target.closest(".task-container").querySelector(".task").id;
+        checklistItemFormDialog.querySelector(
+          "input[name='checklist-item-id']",
+        ).value = e.target.closest(".checklist-item").id;
         checklistItemFormDialog.querySelector(".title").textContent =
           "Edit Checklist Item";
         checklistItemFormDialog.querySelector(
@@ -70,16 +90,51 @@ export const uiController = (() => {
         coordinator.setFormMode("EDIT");
         checklistItemFormDialog.showModal();
       }
+
+      // Delete Checklist Item
+      if (
+        e.target.closest(".delete-button") &&
+        e.target.closest(".checklist-item")
+      ) {
+        const userConfirmed = confirm(`Are you sure you want to delete this?`);
+
+        if (userConfirmed) {
+          coordinator.handleDeleteChecklistItemRequest(
+            e.target.closest(".task-container").querySelector(".task").id,
+            e.target.closest(".checklist-item").id,
+          );
+          console.log("Action confirmed!");
+        } else {
+          console.log("Action cancelled.");
+        }
+      }
     });
 
     projectList.addEventListener("click", (e) => {
       if (e.target.closest(".edit-button")) {
-        projectFormDialog.querySelector("input[name='project-id']").value = e.target.closest(".project-in-list").id;
+        projectFormDialog.querySelector("input[name='project-id']").value =
+          e.target.closest(".project-in-list").id;
         projectFormDialog.querySelector(".title").textContent = "Edit Project";
         projectFormDialog.querySelector("button[type='submit']").textContent =
           "Edit Project";
         coordinator.setFormMode("EDIT");
         projectFormDialog.showModal();
+      }
+
+      // Delete Project
+      if (
+        e.target.closest(".delete-button")
+      ) {
+        const userConfirmed = confirm(`Are you sure you want to delete this?`);
+
+        if (userConfirmed) {
+          coordinator.handleDeleteProjectRequest(
+            e.target.closest(".project-in-list").id,
+          );
+          console.log("Action confirmed!");
+        } else {
+          console.log("Action cancelled.");
+        }
       }
     });
 
@@ -87,7 +142,9 @@ export const uiController = (() => {
       formDialog.addEventListener("close", (e) => {
         console.log(formDialog.returnValue);
         if (formDialog.returnValue === "submit") {
-          coordinator.handleFormRequest(new FormData(formDialog.querySelector("form")))
+          coordinator.handleFormRequest(
+            new FormData(formDialog.querySelector("form")),
+          );
         }
 
         formDialog.querySelector(".input-form").reset();
@@ -134,8 +191,10 @@ export const uiController = (() => {
       `;
       projectList.appendChild(projectDiv);
     }
-    
-    const currentProject = data.find((project) => project.id === currentProjectId);
+
+    const currentProject = data.find(
+      (project) => project.id === currentProjectId,
+    );
     currentProjectTitleElement.textContent = currentProject.name;
     const taskList = currentProject ? currentProject.taskList : [];
     for (const task of taskList) {
@@ -202,8 +261,10 @@ export const uiController = (() => {
                 </span>
               </div>
             </div>
-          `
-          checklistContainerDiv.querySelector(".checklist").appendChild(checklistItemElement);
+          `;
+          checklistContainerDiv
+            .querySelector(".checklist")
+            .appendChild(checklistItemElement);
         }
         taskContainerDiv.appendChild(checklistContainerDiv);
       }
