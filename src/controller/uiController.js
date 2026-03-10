@@ -49,6 +49,11 @@ export const uiController = (() => {
         checklistItemFormDialog.showModal();
       }
 
+      // Toggle Task done
+      if (e.target.closest(".toggle-button") && e.target.closest(".task")) {
+        coordinator.handleToggleTaskDoneRequest(e.target.closest(".task").id);
+      }
+
       // Handles opening the edit form dialog when the edit button is pressed for Tasks
       if (e.target.closest(".edit-button") && e.target.closest(".task")) {
         taskFormDialog.querySelector("input[name='task-id']").value =
@@ -225,7 +230,7 @@ export const uiController = (() => {
 							edit
 							</span>
 						</div>
-						<div class="toggle-button button">
+						<div class="toggle-button button ${task.isDone ? "active" : ""}">
 							<span class="material-symbols-outlined">
 							check
 							</span>
@@ -259,7 +264,7 @@ export const uiController = (() => {
                 edit
                 </span>
               </div>
-              <div class="toggle-button button active">
+              <div class="toggle-button button ${checklistItem.isDone ? "active" : ""}">
                 <span class="material-symbols-outlined">
                 check
                 </span>

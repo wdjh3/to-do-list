@@ -101,6 +101,20 @@ export const coordinator = (() => {
     );
   };
 
+  const handleToggleTaskDoneRequest = (id) => {
+    projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(id)
+      .toggleDone()
+
+    projectController.sync();
+    uiController.render(
+      projectController.getProjects(),
+      projectController.getCurrentProjectId(),
+    );
+
+  }
+
   const handleDeleteTaskRequest = (id) => {
     projectController
       .getProject(projectController.getCurrentProjectId())
@@ -131,6 +145,7 @@ export const coordinator = (() => {
     setFormMode,
     setCurrentProject,
     handleFormRequest,
+    handleToggleTaskDoneRequest,
     handleDeleteTaskRequest,
     handleDeleteChecklistItemRequest,
     handleDeleteProjectRequest,
