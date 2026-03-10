@@ -20,6 +20,20 @@ export const uiController = (() => {
     checklistItemFormDialog,
   ];
 
+  const fillTaskFormFields = (task) => {
+    taskFormDialog.querySelector("#task-title").value = task.title;
+    taskFormDialog.querySelector("#task-due-date").value = task.dueDate;
+    taskFormDialog.querySelector("#task-priority").value = task.priority;
+    taskFormDialog.querySelector("#task-description").value = task.description;
+  };
+
+  const fillChecklistItemFormFields = (checklistItem) => {
+    checklistItemFormDialog.querySelector("#checklist-item-title").value =
+      checklistItem.title;
+    checklistItemFormDialog.querySelector("#checklist-item-description").value =
+      checklistItem.description;
+  };
+
   const start = () => {
     addNewProjectBtn.addEventListener("click", () => {
       projectFormDialog.querySelector(".title").textContent = "Add Project";
@@ -51,8 +65,10 @@ export const uiController = (() => {
 
       // Toggle Task dropdown
       if (e.target.closest(".drop-down") && e.target.closest(".task")) {
-        console.log("toggle dropdown for " + e.target.closest(".task").id)
-        coordinator.handleToggleTaskDropdownRequest(e.target.closest(".task").id);
+        console.log("toggle dropdown for " + e.target.closest(".task").id);
+        coordinator.handleToggleTaskDropdownRequest(
+          e.target.closest(".task").id,
+        );
       }
 
       // Toggle Task done
@@ -61,7 +77,12 @@ export const uiController = (() => {
       }
 
       // Handles opening the edit form dialog when the edit button is pressed for Tasks
-      if (e.target.closest(".edit-button") && e.target.closest(".task")) {
+      if (
+        (e.target.closest(".edit-button") && e.target.closest(".task")) ||
+        e.target.classList.contains("task") ||
+        e.target.classList.contains("task-title")
+      ) {
+        coordinator.setupTaskEditForm(e.target.closest(".task").id);
         taskFormDialog.querySelector("input[name='task-id']").value =
           e.target.closest(".task").id;
         taskFormDialog.querySelector(".title").textContent = "Edit Task";
@@ -96,9 +117,15 @@ export const uiController = (() => {
 
       // Handles opening the edit form dialog when the edit button is pressed for ChecklistItems
       if (
-        e.target.closest(".edit-button") &&
-        e.target.closest(".checklist-item")
+        (e.target.closest(".edit-button") &&
+          e.target.closest(".checklist-item")) ||
+        e.target.classList.contains("checklist-item") ||
+        e.target.classList.contains("checklist-item-title")
       ) {
+        coordinator.setupChecklistItemEditForm(
+          e.target.closest(".task-container").querySelector(".task").id,
+          e.target.closest(".checklist-item").id,
+        );
         checklistItemFormDialog.querySelector("input[name='task-id']").value =
           e.target.closest(".task-container").querySelector(".task").id;
         checklistItemFormDialog.querySelector(
@@ -301,5 +328,5 @@ export const uiController = (() => {
     return true;
   };
 
-  return { start, render };
+  return { start, render, fillTaskFormFields, fillChecklistItemFormFields };
 })();

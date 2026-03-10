@@ -116,6 +116,12 @@ export const coordinator = (() => {
     );
   };
 
+  const handleGetTaskRequest = (id) => {
+    return projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(id);
+  };
+
   const handleToggleTaskDoneRequest = (id) => {
     projectController
       .getProject(projectController.getCurrentProjectId())
@@ -127,6 +133,13 @@ export const coordinator = (() => {
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
     );
+  };
+
+  const setupTaskEditForm = (id) => {
+    const task = projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(id);
+    uiController.fillTaskFormFields(task);
   };
 
   const handleDeleteTaskRequest = (id) => {
@@ -155,6 +168,14 @@ export const coordinator = (() => {
     );
   };
 
+  const setupChecklistItemEditForm = (taskId, checklistItemId) => {
+    const checklistItem = projectController
+      .getProject(projectController.getCurrentProjectId())
+      .getTask(taskId)
+      .getChecklistItem(checklistItemId);
+    uiController.fillChecklistItemFormFields(checklistItem);
+  };
+
   const handleDeleteChecklistItemRequest = (taskId, checklistItemId) => {
     projectController
       .getProject(projectController.getCurrentProjectId())
@@ -173,10 +194,13 @@ export const coordinator = (() => {
     setFormMode,
     setCurrentProject,
     handleFormRequest,
+    handleGetTaskRequest,
+    setupTaskEditForm,
     handleToggleTaskDropdownRequest,
     handleToggleTaskDoneRequest,
     handleDeleteTaskRequest,
     handleToggleChecklistItemDoneRequest,
+    setupChecklistItemEditForm,
     handleDeleteChecklistItemRequest,
     handleDeleteProjectRequest,
   };
