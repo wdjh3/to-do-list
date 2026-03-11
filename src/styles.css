@@ -91,7 +91,7 @@ body {
 }
 
 .projects-section {
-	background-color: bisque;
+	background-color: #764e30;
 	max-height: 100vh;
 	grid-area: sidebar;
 	padding: 12px 12px 300px 12px;
@@ -104,7 +104,7 @@ body {
 }
 
 .project-list-title {
-	background-color: #c69f6c;
+	background-color: #e0c69f;
 	padding: 0.5rem 0 0.5rem 1rem;
 	border-radius: 24px;
 	margin-bottom: 1rem;
@@ -129,11 +129,11 @@ body {
 }
 
 .project-in-list {
-	background-color: #a2602e;
+	background-color: navajowhite;
 }
 
 .project-in-list:hover {
-	background-color: #6f370f;
+	background-color: #8f7356;
 	cursor: pointer;
 }
 
@@ -195,10 +195,13 @@ body {
 	justify-content: space-between;
 }
 
-.add-project,
 .add-task,
 .add-checklist-item {
 	color: rgba(0, 0, 0, 0.8);
+}
+
+.add-project {
+	color: rgba(255, 255, 255, 0.75);
 }
 
 .add-project:hover,
