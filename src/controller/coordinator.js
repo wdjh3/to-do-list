@@ -89,14 +89,18 @@ export const coordinator = (() => {
 
     const currentProjectId = projectController.getCurrentProjectId();
 
+    // If deleting current project, go to first project
     if (currentProjectId === id) {
       if (projectController.getProjects().length === 0) {
-        return;
+        projectController.setCurrentProjectId(null);
+      } else {
+        projectController.setCurrentProjectId(
+          projectController.getProjects()[0].id,
+        );
       }
-      projectController.setCurrentProjectId(
-        projectController.getProjects()[0].id,
-      );
     }
+
+    console.log("This should activate uiController.render(" + projectController.getProjects() + ", " + projectController.getCurrentProjectId() + ")")
     uiController.render(
       projectController.getProjects(),
       projectController.getCurrentProjectId(),
